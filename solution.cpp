@@ -178,15 +178,6 @@ void dikstra() {
 
 		// forward
 		nxt = go_forward(cur);
-		// cout << "cur = " << cur << endl;
-		// cout << "nxt = " << nxt << endl;
-		// cout << "D:\n";
-		// for (auto e : d) {
-			// cout << e.first << " - " << e.second << endl;
-		// }
-		// cout << endl;
-		// cout << ok(nxt) << endl;
-		// cout << (d.find(nxt) == d.end()) << endl;
 		if (ok(nxt) && ((d.find(nxt) == d.end()) || (d[nxt] > d[cur] + a))) {
 			q.erase({d[nxt], nxt});
 			d[nxt] = d[cur] + a;
@@ -212,9 +203,6 @@ void dikstra() {
 			q.insert({d[nxt], nxt});
 		}
 	}
-	// for (auto e : d) {
-	// 	cout << "dist " << e.first << " = " << e.second << "\n";
-	// }
 
 	d_xy.clear();
 	for (auto e : d) {
@@ -290,7 +278,6 @@ signed main() {
 		b = v[5];
 		c = v[6];
 		k = v[7];
-		// cin >> p1.first >> p1.second >> p2.first >> p2.second >> a >> b >> c >> k;
 
 		robot.x = p1.first;
 		robot.y = p1.second;
@@ -302,14 +289,12 @@ signed main() {
 				break;
 			}
 		}
-		// cout << robot << endl;
 	}
 
 	// put(1, 0, 2);
 	// put(0, 1, 2);
 
 	put(robot.x, robot.y, 1);
-	// for (auto e : unknown) cout << e.first << " " << e.second << endl;
 
 
 	int pre_fire = 0;
@@ -338,7 +323,6 @@ signed main() {
 			for (auto wallcell : uw) {
 				if (e == wallcell) continue;
 				if (check(robot.x, robot.y, e.first, e.second, wallcell.first, wallcell.second)) {
-					// cout << "Bad: " << e.first << " " << e.second << " cause of " << wallcell.first << " " << wallcell.second << endl;
 					see = false;
 					break;
 				}
@@ -346,12 +330,9 @@ signed main() {
 			if (see) {
 				cost_go += 2 * d[{e.first, e.second}] + 4 * b;
 			}
-			// cout << e.first << " " << e.second << " - see: " << see << endl;
 		}
 
 
-		// cout << "cost_go = " << cost_go << endl;
-		// cout << "cost_fire = " << cost_fire << endl;
 		if (cost_go > cost_fire && !pre_fire) {
 			// fire
 			pre_fire = 1;
@@ -384,17 +365,13 @@ signed main() {
 				for (auto wallcell : uw) {
 					if (e == wallcell) continue;
 					if (check(robot.x, robot.y, e.first, e.second, wallcell.first, wallcell.second)) {
-						// cout << "Bad: " << e.first << " " << e.second << " cause of " << wallcell.first << " " << wallcell.second << endl;
 						see = false;
 						break;
 					}
 				}
 				if (see) {
 					surewall.push_back(e);
-					// put(e.first, e.second, 2);
-					// cost_go += 2 * d[{e.first, e.second}] + 4 * b;
 				}
-				// cout << e.first << " " << e.second << " - see: " << see << endl;
 			}
 
 			for (auto e : surewall) {
@@ -406,16 +383,14 @@ signed main() {
 			pos minpos;
 			int mindist = -1;
 			for (auto e : d) {
+				if (m[{e.first.x, e.first.y}] != 3) continue;
 				if (e.second == 0) continue;
 				if ((robot.x == e.first.x) && (robot.y == e.first.y)) continue;
-				// cout << "mindist = " << mindist << endl;
-				// cout << e.first << " " << e.second << " - dist, bool: " << ((e.second > 0)) << " : " <<  ((mindist > e.second)) << "\n";
 				if ((mindist == -1) || (mindist > e.second)) {
 					mindist = e.second;
 					minpos = e.first;
 				}
 			}
-			// cout << "minpos = " << minpos << endl;
 
 			pair<pos, int> pre = pred[minpos];
 			while (pre.first != robot) {
@@ -432,6 +407,7 @@ signed main() {
 			}
 
 		}
+
 	}
 	cout << "4 " << ans_cost << endl;
 
